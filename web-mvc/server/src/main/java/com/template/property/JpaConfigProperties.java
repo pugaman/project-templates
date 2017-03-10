@@ -1,5 +1,6 @@
 package com.template.property;
 
+import org.apache.log4j.Logger;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +13,8 @@ import javax.annotation.PostConstruct;
 @ConfigurationProperties(prefix = "jpa")
 public class JpaConfigProperties {
 
+    private static final Logger LOG = Logger.getLogger(JpaConfigProperties.class);
+
     private static final String DEFAULT_DEFAULT_SCHEMA = "";
     private static final String DEFAULT_DDL_AUTO = "";
     private static final String DEFAULT_NAMING_STRATEGY = "";
@@ -23,17 +26,21 @@ public class JpaConfigProperties {
     private String dialect;
 
     @PostConstruct
-    private void init(){
-        if(getDefaultSchema() == null){
+    private void init() {
+        if (getDefaultSchema() == null) {
+            LOG.warn("Default Schema is not set. Setting default value.");
             setDefaultSchema(DEFAULT_DEFAULT_SCHEMA);
         }
-        if(getDdlAuto() == null){
+        if (getDdlAuto() == null) {
+            LOG.warn("DDL AUTO is not set. Setting default value.");
             setDdlAuto(DEFAULT_DDL_AUTO);
         }
-        if(getNamingStrategy() == null){
+        if (getNamingStrategy() == null) {
+            LOG.warn("Naming Strategy is not set. Setting default value.");
             setNamingStrategy(DEFAULT_NAMING_STRATEGY);
         }
-        if(getDialect() == null){
+        if (getDialect() == null) {
+            LOG.warn("Dialect is not set. Setting default value.");
             setDialect(DEFAULT_DIALECT);
         }
     }

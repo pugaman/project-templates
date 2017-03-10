@@ -1,5 +1,6 @@
 package com.template.configuration;
 
+import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,16 +17,27 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 @EnableWebSecurity
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    private static final Logger LOG = Logger.getLogger(WebSecurityConfiguration.class);
+
     @Bean
     public UserDetailsService userDetailsService() {
+        LOG.info("Getting in-memory user details service.");
+
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
         manager.createUser(User.withUsername("admin").password("admin").roles("ADMIN").build());
         manager.createUser(User.withUsername("user").password("user").roles("USER").build());
+
+        LOG.info("In-memory user details service is successfully created.");
+
         return manager;
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
+        LOG.info("Starting web security configuration.");
+
+        LOG.info("Starting web security authorization configuration.");
         //Http authorization configuration
         http.authorizeRequests()
                 .antMatchers("/public/**").permitAll()
@@ -35,10 +47,13 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin();
 
+        LOG.info("Starting web security logout configuration.");
         //Logout configuration
         http.logout()
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/");
+
+        LOG.info("Web security is successfully configured.");
 
     }
 }

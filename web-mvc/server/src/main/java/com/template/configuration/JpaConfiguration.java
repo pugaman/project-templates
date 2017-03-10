@@ -1,6 +1,7 @@
 package com.template.configuration;
 
 import com.template.property.JpaConfigProperties;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,6 +26,8 @@ import java.util.Properties;
 @EnableTransactionManagement
 public class JpaConfiguration {
 
+    private static final Logger LOG = Logger.getLogger(JpaConfiguration.class);
+
     private static final String JPA_PROPERTY_NAME_DEFAULT_SCHEMA = "hibernate.default_schema";
     private static final String JPA_PROPERTY_NAME_DDL_AUTO = "hibernate.hbm2ddl.auto";
     private static final String JPA_PROPERTY_NAME_NAMING_STRATEGY = "hibernate.ejb.naming_strategy";
@@ -39,6 +42,8 @@ public class JpaConfiguration {
 
     @Bean
     AbstractEntityManagerFactoryBean entityManagerFactoryBean(){
+        LOG.info("Getting entity manager factory.");
+
         JpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
 
         Properties jpaProperties = new Properties();
@@ -54,12 +59,15 @@ public class JpaConfiguration {
         factoryBean.setJpaProperties(jpaProperties);
         factoryBean.setPackagesToScan(PACKAGES_TO_SCAN_ENTITIES);
 
+        LOG.info("Entity manager factory is successfully created.");
         return factoryBean;
     }
 
     @Bean
     PlatformTransactionManager transactionManager(){
+        LOG.info("Getting transaction manager.");
         AbstractPlatformTransactionManager jpaTransactionManager = new JpaTransactionManager(entityManagerFactoryBean().getObject());
+        LOG.info("Transaction manager is successfully created.");
         return jpaTransactionManager;
     }
 
