@@ -1,7 +1,7 @@
 # Development configuration
 ---
 spring:
-  profiles: dev
+  profiles: development
 
 datasource:
   url: jdbc:postgresql://localhost:5432/template
@@ -12,13 +12,13 @@ datasource:
 jpa:
   default-schema: template
   ddl-auto: validate
-  naming-strategy:
-  dialect:
+  naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+  dialect: org.hibernate.dialect.PostgreSQL9Dialect
 
 # Production configuration
 ---
 spring:
-  profiles: prod
+  profiles: production
 
 datasource:
   url: jdbc:postgresql://localhost:5432/template
@@ -29,6 +29,6 @@ datasource:
 jpa:
   default-schema: template
   ddl-auto: validate
-  naming-strategy:
-  dialect:
+  naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+  dialect: org.hibernate.dialect.PostgreSQL9Dialect
 

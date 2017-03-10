@@ -7,7 +7,7 @@
     <groupId>com.template.web-mvc</groupId>
     <artifactId>database</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
     <name>Database migration</name>
 
@@ -31,7 +31,7 @@
                     <user>${userSQL}</user>
                     <password>${passwordSQL}</password>
                     <validateOnMigrate>true</validateOnMigrate>
-                    <sqlMigrationPrefix>r</sqlMigrationPrefix>
+                    <sqlMigrationPrefix>V</sqlMigrationPrefix>
                     <schemas>
                         <schema>template</schema>
                     </schemas>
