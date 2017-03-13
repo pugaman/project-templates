@@ -21,7 +21,7 @@
     </properties>
 
     <build>
-        <finalName>jCab</finalName>
+        <finalName>template</finalName>
         <plugins>
             <plugin>
                 <groupId>org.flywaydb</groupId>
